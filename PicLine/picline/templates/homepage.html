@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+        <title>
+            {% block titulo %}
+                Início
+            {% endblock %} - PicLine
+        </title>
+    </head>
+    {% block body %}
+        <body class="overflow-hidden">
+            <div class="container">
+                <header>
+                    <nav>
+                        <div class="logo-picline">
+                            <img src="{{ url_for('static', filename='imagens/picline.svg') }}" />
+                            <h1>PicLine</h1>
+                        </div>
+                        <div class="restante-nav">
+                            <a href="" class="link-nav">Sobre</a>
+                            <a href="" class="link-nav">Negócios</a>
+                            <a href="" class="link-nav">Blog</a>
+                        </div>
+                    </nav>
+                </header>
+                <img src="{{ url_for('static', filename='imagens/fundo-login.png') }}" class="bg-imagem-picline" />
+                <div class="container-popup">
+                    {% block formulario %}
+                        <form method="post" class="popup">
+                            {{ form.csrf_token }}
+                            <img src="{{ url_for('static', filename='imagens/picline.svg') }}" />
+                            <h2>Bem-vindo(a) ao PicLine</h2>
+                            <div class="div-input">
+                                {{ form.email.label(class="label") }}
+                                {% if form.email.errors %}
+                                    {% for erro in form.email.errors %}
+                                        <p class="erro">{{ erro }}</p>
+                                    {% endfor %}
+                                {% endif %}
+                                {{ form.email(class="input") }}
+                            </div>
+                            <div class="div-input">
+                                {{ form.senha.label(class="label") }}
+                                {{ form.senha(class="input") }}
+                            </div>
+                            <div class="div-botao">
+                                {{ form.botao_confirmacao(class="botao-login") }}
+                                <a href="{{ url_for('criar_conta') }}" class="link-criarconta">Não tem uma conta? Crie aqui</a>
+                            </div>
+                        </form>
+                    {% endblock %}
+                </div>
+            </div>
+        </body>
+    {% endblock %}
+</html>

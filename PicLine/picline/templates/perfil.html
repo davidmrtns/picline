@@ -1,0 +1,49 @@
+{% extends "homepage.html" %}
+
+{% block titulo %}
+    Pefil {{ usuario.username }}
+{% endblock %}
+
+{% block body %}
+    <body>
+        {% include "navbar.html" %}
+        <div class="container">
+            <div class="bloco-dados-perfil">
+                <div class="profile-pic">
+                    <p>{{ usuario.nome[:1] }}</p>
+                </div>
+                <h2>{{ usuario.nome }}</h2>
+                <p>{{ usuario.username }}</p>
+            </div>
+            <div class="conteudo">
+                {% if form %}
+                    <form class="bloco-add-img" method="post" enctype="multipart/form-data">
+                        {{ form.csrf_token }}
+                        <h2>Novo post</h2>
+                        <div class="bloco-arquivo">
+                            <label class="botao-arquivo">
+                                Escolher arquivo
+                                {{ form.foto(class="input-arquivo", id="foto") }}
+                            </label>
+                            <span id="imagem-arquivo" class=""></span>
+                        </div>
+                        {{ form.botao_confirmacao(class="botao-login") }}
+                    </form>
+                {% endif %}
+                {% for foto in usuario.fotos %}
+                    <div class="bloco-imagem">
+                        {% if form %}
+                            <div class="bloco-exclusao">
+                                <a href="{{ url_for('excluir_imagem', id_imagem=foto.id) }}">
+                                    <img src="{{ url_for('static', filename='imagens/trash.svg') }}" />
+                                </a>
+                            </div>
+                        {% endif %}
+                        <img src="{{ url_for('static', filename='posts/{}'.format(foto.imagem)) }}" alt="post" />
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/fileinput.js') }}"></script>
+    </body>
+{% endblock %}
