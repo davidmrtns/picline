@@ -2,12 +2,14 @@
 
 {% block body %}
     {% include "navbar.html" %}
-    <div class="conteudo feed">
-        {% for foto in fotos %}
-            <a href="{{ url_for('perfil', username=foto.usuario.username) }}" class="bloco-imagem">
-                <img src="{{ url_for('static', filename='posts/{}'.format(foto.imagem)) }}" alt="Post" />
-                <p>@{{ foto.usuario.username }}</p>
-            </a>
-        {% endfor %}
+    <div class="container">
+        <div class="conteudo feed">
+            {% for foto in fotos %}
+                <a href="{{ url_for('perfil', username=foto.usuario.username) }}" class="bloco-imagem">
+                    <img src="{{ url_for('static', filename='posts/{}'.format(foto.imagem)) }}" alt="Post" />
+                    <p>@{{ foto.usuario.username }}</p>
+                </a>
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}
